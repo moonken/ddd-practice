@@ -1,7 +1,6 @@
-package com.thoughtworks.dddpractice.framework.support.infrastructure.repository.jpa;
+package com.thoughtworks.dddpractice.framework.support.domain;
 
-import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
-import com.thoughtworks.dddpractice.framework.support.domain.GenericDomainRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
@@ -9,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 
+@Slf4j
 public abstract class GenericDomainRepositoryImpl<D extends BaseAggregateRoot, P extends BaseAggregateRootPO>
   implements GenericDomainRepository<D> {
 
@@ -33,6 +33,7 @@ public abstract class GenericDomainRepositoryImpl<D extends BaseAggregateRoot, P
     }
 
     D aggregate = poToDomain(aggregatePO);
+    aggregate.setOriginalPO(aggregatePO);
 
     return aggregate;
   }
@@ -42,9 +43,13 @@ public abstract class GenericDomainRepositoryImpl<D extends BaseAggregateRoot, P
   @Override
   @Transactional(rollbackFor = Exception.class)
   public void save(D aggregate) {
-    P aggregatePO = (P) jpaRepository.findById(aggregate.getAggregateId())
-      .map(p -> p.updateByDomain(aggregate))
-      .orElse(domainToPO(aggregate));
+    P aggregatePO = (P) aggregate.getOriginalPO();
+    if (aggregatePO != null) {
+      aggregatePO.updateByDomain(aggregate);
+    } else {
+      aggregatePO = domainToPO(aggregate);
+    }
+
     jpaRepository.save(aggregatePO);
   }
 

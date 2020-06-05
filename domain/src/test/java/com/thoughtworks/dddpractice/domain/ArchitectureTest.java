@@ -141,11 +141,13 @@ public class ArchitectureTest {
 
   private GivenClassesConjunction domainObjects() {
     return classes().that()
-      .resideInAPackage(DOMAIN);
+      .resideInAPackage(DOMAIN)
+      .and().haveNameNotMatching("(.*)Builder$");
   }
 
   private GivenClassesConjunction noDomainObjects() {
     return noClasses().that()
-      .resideInAPackage(DOMAIN);
+      .resideInAPackage(DOMAIN)
+      .and().haveNameNotMatching("(.*)Builder$");
   }
 }

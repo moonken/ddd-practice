@@ -1,10 +1,11 @@
 package com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods;
 
-import com.thoughtworks.dddpractice.framework.annotations.domain.DomainRepositoryImpl;
-import com.thoughtworks.dddpractice.framework.support.infrastructure.repository.jpa.GenericDomainRepositoryImpl;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
+import com.thoughtworks.dddpractice.framework.annotations.domain.DomainRepositoryImpl;
+import com.thoughtworks.dddpractice.framework.support.domain.GenericDomainRepositoryImpl;
+import com.thoughtworks.dddpractice.infrastructure.ObjectMapper;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class GoodsRepositoryImpl extends GenericDomainRepositoryImpl<Goods, Good
 
   @Override
   protected Goods poToDomain(GoodsPO goodsPO) {
-    return goodsFactory.load(goodsPO.getAggregateId(), goodsPO.getCode(), goodsPO.getName(), goodsPO.getPrice());
+    return goodsFactory.load(ObjectMapper.MAPPER.poToVO(goodsPO));
   }
 
   @Override

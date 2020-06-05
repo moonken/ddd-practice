@@ -1,9 +1,12 @@
 package com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods;
 
-import com.thoughtworks.dddpractice.framework.support.infrastructure.repository.jpa.BaseAggregateRootPO;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
+import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRootPO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,6 +15,9 @@ import javax.persistence.Table;
 @Table(name = "goods")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Where(clause = "aggregate_status='ACTIVE'")
 public class GoodsPO extends BaseAggregateRootPO<Goods> {
   private String code;
   private String name;

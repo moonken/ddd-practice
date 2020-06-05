@@ -1,5 +1,7 @@
 package com.thoughtworks.dddpractice.representation.restful.controllers;
 
+import com.thoughtworks.dddpractice.application.ObjectMapper;
+import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
 import com.thoughtworks.dddpractice.application.service.GoodsReadService;
 import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
@@ -56,8 +58,9 @@ class GoodsControllerIntegrationTest {
       "\"name\": \"apple\",\n" +
       "\"price\": 3.5\n" +
       "}";
-    Goods goods = goodsFactory.create("001", "apple", 3.5);
-    when(goodsWriteService.create("001", "apple", 3.5))
+    GoodsCreateCommand command = GoodsCreateCommand.builder().code("001").name("apple").price(3.5).build();
+    Goods goods = goodsFactory.create(ObjectMapper.MAPPER.commandToVO(command));
+    when(goodsWriteService.create(command))
       .thenReturn(goods);
 
     //when

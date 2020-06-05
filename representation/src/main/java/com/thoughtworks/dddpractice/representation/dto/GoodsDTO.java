@@ -1,4 +1,4 @@
-package com.thoughtworks.dddpractice.representation.vo;
+package com.thoughtworks.dddpractice.representation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class GoodsVO {
+public class GoodsDTO {
   private String aggregateId;
   private String code;
   private String name;

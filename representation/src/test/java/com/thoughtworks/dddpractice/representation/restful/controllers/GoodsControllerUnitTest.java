@@ -1,14 +1,14 @@
 package com.thoughtworks.dddpractice.representation.restful.controllers;
 
-import com.thoughtworks.dddpractice.application.service.GoodsReadService;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
+import com.thoughtworks.dddpractice.application.service.GoodsReadService;
 import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
+import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.JpaGoodsRepository;
-import com.thoughtworks.dddpractice.representation.vo.GoodsVO;
+import com.thoughtworks.dddpractice.representation.dto.GoodsDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -67,7 +66,7 @@ class GoodsControllerUnitTest {
     GoodsCreateCommand goodsCreateCommand = new GoodsCreateCommand("001", "apple", 3.5);
 
     //when
-    GoodsVO goodsVO = goodsController.create(goodsCreateCommand);
+    GoodsDTO goodsVO = goodsController.create(goodsCreateCommand);
 
     //then
     assertThat(goodsVO.getCode(), is("001"));
@@ -85,10 +84,10 @@ class GoodsControllerUnitTest {
     ));
 
     //when
-    List<GoodsVO> goodsVOs = goodsController.getAll();
+    List<GoodsDTO> goodsVOs = goodsController.getAll();
 
     //then
     assertThat(goodsVOs.size(), is(2));
-    assertThat(goodsVOs.stream().map(GoodsVO::getCode).collect(toList()), containsInAnyOrder("001", "002"));
+    assertThat(goodsVOs.stream().map(GoodsDTO::getCode).collect(toList()), containsInAnyOrder("001", "002"));
   }
 }

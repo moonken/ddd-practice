@@ -1,4 +1,4 @@
-package com.thoughtworks.dddpractice.representation.vo;
+package com.thoughtworks.dddpractice.representation.dto;
 
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
@@ -9,14 +9,14 @@ import java.util.List;
 
 import static org.mapstruct.ReportingPolicy.IGNORE;
 
-@Mapper(unmappedSourcePolicy = IGNORE)
+@Mapper(unmappedSourcePolicy = IGNORE, unmappedTargetPolicy = IGNORE)
 public interface GoodsMapper {
 
   GoodsMapper MAPPER = Mappers.getMapper(GoodsMapper.class);
 
-  GoodsVO toVO(Goods goods);
+  GoodsDTO toDTO(Goods goods);
 
-  GoodsVO toVO(GoodsPO goods);
+  GoodsDTO toDTO(GoodsPO goods);
 
-  List<GoodsVO> toVOs(List<GoodsPO> goods);
+  List<GoodsDTO> toDTOs(List<GoodsPO> goods);
 }

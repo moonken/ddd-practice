@@ -6,8 +6,8 @@ import com.thoughtworks.dddpractice.application.service.GoodsReadService;
 import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
-import com.thoughtworks.dddpractice.representation.vo.GoodsMapper;
-import com.thoughtworks.dddpractice.representation.vo.GoodsVO;
+import com.thoughtworks.dddpractice.representation.dto.GoodsDTO;
+import com.thoughtworks.dddpractice.representation.dto.GoodsMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,9 +32,9 @@ public class GoodsController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public GoodsVO create(@RequestBody @Valid GoodsCreateCommand command) {
-    Goods goods = goodsWriteService.create(command.getCode(), command.getName(), command.getPrice());
-    return GoodsMapper.MAPPER.toVO(goods);
+  public GoodsDTO create(@RequestBody @Valid GoodsCreateCommand command) {
+    Goods goods = goodsWriteService.create(command);
+    return GoodsMapper.MAPPER.toDTO(goods);
   }
 
   @PutMapping("{id}")
@@ -43,15 +43,15 @@ public class GoodsController {
   }
 
   @GetMapping("{id}")
-  public GoodsVO get(@PathVariable String id) {
+  public GoodsDTO get(@PathVariable String id) {
     GoodsPO goods = goodsReadService.getPO(id);
-    return GoodsMapper.MAPPER.toVO(goods);
+    return GoodsMapper.MAPPER.toDTO(goods);
   }
 
   @GetMapping
-  public List<GoodsVO> getAll() {
+  public List<GoodsDTO> getAll() {
     List<GoodsPO> goods = goodsReadService.getAllPO();
-    return GoodsMapper.MAPPER.toVOs(goods);
+    return GoodsMapper.MAPPER.toDTOs(goods);
   }
 
   @DeleteMapping("{id}")

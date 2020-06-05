@@ -6,7 +6,7 @@
 ![](docs/4层架构.png)
 
 ### 用户接口层
- 对应representation模块，包含RESTful接口及传递给client的VO对象。  
+ 对应representation模块，包含RESTful接口及传递给client的DTO对象。  
 ### 应用层
  对应application模块，采用读写分离策略，Application Service分为ReadService和WriteService。 ReadService可以直接读取jpa对象，也可以读取domain对象，（建议直接读取jpa对象，减少对象转换，能够按需支持多做返回结构），WriteService必须通过Domain层进行操作，保证业务一致性。
 ![](docs/Query Model.png)
@@ -38,8 +38,9 @@
 
 ## 命名规范
 对于存储层对象，统一采用PO后缀命名  
-领域对象统一不加后缀  
-数据传输对象统一采用VO后缀命名
+聚合跟，实体统一不加后缀
+领域值对象统一采用VO后缀(Domain层可采用VO对象接受外界参数)    
+数据传输对象统一采用DTO后缀命名
 
 ApplicationService统一命名以\*\*\*ReadService, \*\*\*WriteService或\*\*\*ApplicationService为后缀。   
 其他Service均为DomainService   

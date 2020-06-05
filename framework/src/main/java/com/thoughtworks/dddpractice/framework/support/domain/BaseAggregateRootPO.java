@@ -1,8 +1,10 @@
-package com.thoughtworks.dddpractice.framework.support.infrastructure.repository.jpa;
+package com.thoughtworks.dddpractice.framework.support.domain;
 
-import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -10,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(of = "aggregateId")
 @MappedSuperclass
@@ -18,13 +21,24 @@ public abstract class BaseAggregateRootPO<D extends BaseAggregateRoot> {
   @Id
   @Column(name = "id")
   @Getter
+  @Setter
   protected String aggregateId;
 
   @Version
+  @Getter
   private Long version;
 
-  @Enumerated(EnumType.ORDINAL)
+  @Enumerated(EnumType.STRING)
   private BaseAggregateRoot.AggregateStatus aggregateStatus = BaseAggregateRoot.AggregateStatus.ACTIVE;
+
+  @CreationTimestamp
+  @Column(updatable = false)
+  @Getter
+  private LocalDateTime createdTime;
+
+  @UpdateTimestamp
+  @Getter
+  private LocalDateTime lastModifiedTime;
 
   public boolean isRemoved() {
     return aggregateStatus == BaseAggregateRoot.AggregateStatus.ARCHIVE;
