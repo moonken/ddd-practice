@@ -122,7 +122,7 @@ public class ArchitectureTest {
       @Override
       public void check(JavaConstructor method, ConditionEvents events) {
         method.getCallsOfSelf().stream()
-          .filter(call -> !call.getOriginOwner().isAnnotatedWith(annotationType))
+          .filter(call -> !call.getOriginOwner().isAnnotatedWith(annotationType) && !call.getOriginOwner().equals(call.getTargetOwner()))
           .forEach(call -> events.add(SimpleConditionEvent.violated(method, call.getDescription())));
       }
     };
