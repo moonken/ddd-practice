@@ -1,4 +1,4 @@
-package com.thoughtworks.dddpractice.framework.support.infrastructure.events;
+package com.thoughtworks.dddpractice.infrastructure.events;
 
 import com.thoughtworks.dddpractice.framework.annotations.event.EventListener;
 import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;

@@ -1,4 +1,4 @@
-package com.thoughtworks.dddpractice.framework.support.infrastructure.events;
+package com.thoughtworks.dddpractice.infrastructure.events;
 
 public interface EventHandler {
   boolean canHandle(Object event);
