@@ -33,14 +33,10 @@ public class Goods extends BaseAggregateRoot {
   }
 
   Goods(String id, GoodsVO goodsVO, DomainEventPublisher domainEventPublisher) {
-    super(domainEventPublisher);
+    this(goodsVO, domainEventPublisher);
     validateNameLength(goodsVO.getName());
     validatePrice(goodsVO.getPrice());
-
     this.aggregateId = id;
-    this.code = goodsVO.getCode();
-    this.name = goodsVO.getName();
-    this.price = goodsVO.getPrice();
   }
 
   public void rename(String name) {
