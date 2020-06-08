@@ -6,9 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Where;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -19,16 +22,15 @@ import javax.persistence.Table;
 @Builder
 @Where(clause = "aggregate_status='ACTIVE'")
 public class GoodsPO extends BaseAggregateRootPO<Goods> {
+
+  @Id
+  @Column(name = "id")
+  @Setter
+  protected String aggregateId;
+
   private String code;
   private String name;
   private Double price;
-
-  public GoodsPO(String aggregateId, String code, String name, Double price) {
-    this.aggregateId = aggregateId;
-    this.code = code;
-    this.name = name;
-    this.price = price;
-  }
 
   @Override
   protected void update(Goods aggregate) {

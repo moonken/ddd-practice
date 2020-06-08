@@ -4,6 +4,5 @@ import lombok.Getter;
 
 @Getter
 public abstract class BaseEntity {
-
-  private String entityId;
+  protected String entityId;
 }

@@ -14,11 +14,6 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseEntityPO {
 
-  @Id
-  @Column(name = "id")
-  @Getter
-  private String entityId;
-
   @CreationTimestamp
   @Column(updatable = false)
   private LocalDateTime createdTime;

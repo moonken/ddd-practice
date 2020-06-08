@@ -20,12 +20,13 @@ public class GoodsRepositoryImpl extends GenericDomainRepositoryImpl<Goods, Good
 
   @Override
   protected Goods poToDomain(GoodsPO goodsPO) {
-    return goodsFactory.load(ObjectMapper.MAPPER.poToVO(goodsPO));
+    return goodsFactory.load(ObjectMapper.MAPPER.poToDTO(goodsPO));
   }
 
   @Override
   protected GoodsPO domainToPO(Goods goods) {
-    return new GoodsPO(goods.getAggregateId(), goods.getCode(), goods.getName(), goods.getPrice());
+    GoodsPO goodsPO = ObjectMapper.MAPPER.domainToPO(goods);
+    return goodsPO;
   }
 
   @Override

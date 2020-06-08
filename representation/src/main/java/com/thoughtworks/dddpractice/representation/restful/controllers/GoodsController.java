@@ -5,7 +5,6 @@ import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
-import com.thoughtworks.dddpractice.representation.ObjectMapper;
 import com.thoughtworks.dddpractice.representation.dto.GoodsMapper;
 import com.thoughtworks.dddpractice.representation.restful.request.GoodsCreateRequest;
 import com.thoughtworks.dddpractice.representation.restful.request.GoodsRenameRequest;
@@ -34,7 +33,7 @@ public class GoodsController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public GoodsDTO create(@RequestBody @Valid GoodsCreateRequest request) {
-    Goods goods = goodsWriteService.create(ObjectMapper.MAPPER.toCommand(request));
+    Goods goods = goodsWriteService.create(GoodsMapper.MAPPER.toCommand(request));
     return GoodsMapper.MAPPER.toDTO(goods);
   }
 

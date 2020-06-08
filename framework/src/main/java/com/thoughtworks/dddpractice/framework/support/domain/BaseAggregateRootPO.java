@@ -18,12 +18,6 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseAggregateRootPO<D extends BaseAggregateRoot> {
 
-  @Id
-  @Column(name = "id")
-  @Getter
-  @Setter
-  protected String aggregateId;
-
   @Version
   @Getter
   private Long version;
