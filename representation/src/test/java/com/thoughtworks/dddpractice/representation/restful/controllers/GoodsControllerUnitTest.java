@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,9 +36,6 @@ class GoodsControllerUnitTest {
   DomainEventPublisher domainEventPublisher;
 
   @Mock
-  AutowireCapableBeanFactory autowireCapableBeanFactory;
-
-  @Mock
   JpaGoodsRepository jpaGoodsRepository;
 
   GoodsFactory goodsFactory;
@@ -51,8 +47,7 @@ class GoodsControllerUnitTest {
 
   @BeforeEach
   void setUp() {
-    goodsFactory = new GoodsFactory(domainEventPublisher, goodsRepository,
-      autowireCapableBeanFactory);
+    goodsFactory = new GoodsFactory(domainEventPublisher, goodsRepository);
 
     goodsWriteService = new GoodsWriteService(goodsFactory, goodsRepository);
     goodsReadService = new GoodsReadService(jpaGoodsRepository);

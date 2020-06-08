@@ -7,6 +7,7 @@ import com.thoughtworks.dddpractice.framework.annotations.domain.AggregateRoot;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariant;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariants;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
+import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import lombok.Getter;
 
 @Invariants({
@@ -23,14 +24,16 @@ public class Goods extends BaseAggregateRoot {
   private String name;
   private Double price;
 
-  Goods(GoodsVO goodsVO) {
+  Goods(GoodsVO goodsVO, DomainEventPublisher domainEventPublisher) {
+    super(domainEventPublisher);
     this.aggregateId = goodsVO.getAggregateId();
     this.code = goodsVO.getCode();
     this.name = goodsVO.getName();
     this.price = goodsVO.getPrice();
   }
 
-  Goods(String id, GoodsVO goodsVO) {
+  Goods(String id, GoodsVO goodsVO, DomainEventPublisher domainEventPublisher) {
+    super(domainEventPublisher);
     validateNameLength(goodsVO.getName());
     validatePrice(goodsVO.getPrice());
 

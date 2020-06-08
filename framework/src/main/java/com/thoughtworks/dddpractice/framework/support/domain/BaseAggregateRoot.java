@@ -5,14 +5,9 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
-@Component
-@Scope("prototype")
 @EqualsAndHashCode(of = "aggregateId")
 @Getter
 public abstract class BaseAggregateRoot {
@@ -22,7 +17,7 @@ public abstract class BaseAggregateRoot {
   private BaseAggregateRootPO originalPO;
 
   public enum AggregateStatus {
-    ACTIVE, ARCHIVE
+    ACTIVE, ARCHIVE;
   }
 
   @Getter
@@ -32,8 +27,11 @@ public abstract class BaseAggregateRoot {
 
   private AggregateStatus aggregateStatus = AggregateStatus.ACTIVE;
 
-  @Autowired
   protected DomainEventPublisher eventPublisher;
+
+  public BaseAggregateRoot(DomainEventPublisher domainEventPublisher) {
+    this.eventPublisher = domainEventPublisher;
+  }
 
   public void markAsRemoved() {
     aggregateStatus = AggregateStatus.ARCHIVE;
