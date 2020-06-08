@@ -1,21 +1,23 @@
-package com.thoughtworks.dddpractice.domain.goods.vo;
+package com.thoughtworks.dddpractice.representation.restful.request;
 
-import com.thoughtworks.dddpractice.framework.annotations.domain.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
-@ValueObject
-public class GoodsVO {
-  private String aggregateId;
+public class GoodsCreateRequest {
+  @NotNull
   private String code;
+
+  @NotNull
   private String name;
+
+  @NotNull
   private Double price;
 }

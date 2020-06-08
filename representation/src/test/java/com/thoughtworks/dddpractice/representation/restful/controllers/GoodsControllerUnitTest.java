@@ -1,14 +1,15 @@
 package com.thoughtworks.dddpractice.representation.restful.controllers;
 
-import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
 import com.thoughtworks.dddpractice.application.service.GoodsReadService;
 import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
+import com.thoughtworks.dddpractice.domain.goods.GoodsService;
+import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.JpaGoodsRepository;
-import com.thoughtworks.dddpractice.representation.dto.GoodsDTO;
+import com.thoughtworks.dddpractice.representation.restful.request.GoodsCreateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +41,8 @@ class GoodsControllerUnitTest {
 
   GoodsFactory goodsFactory;
 
+  GoodsService goodsService;
+
   GoodsWriteService goodsWriteService;
   GoodsReadService goodsReadService;
 
@@ -48,8 +51,9 @@ class GoodsControllerUnitTest {
   @BeforeEach
   void setUp() {
     goodsFactory = new GoodsFactory(domainEventPublisher, goodsRepository);
+    goodsService = new GoodsService(goodsFactory, goodsRepository, domainEventPublisher);
 
-    goodsWriteService = new GoodsWriteService(goodsFactory, goodsRepository);
+    goodsWriteService = new GoodsWriteService(goodsService, goodsRepository);
     goodsReadService = new GoodsReadService(jpaGoodsRepository);
 
     goodsController = new GoodsController(goodsWriteService, goodsReadService);
@@ -58,16 +62,16 @@ class GoodsControllerUnitTest {
   @Test
   void should_create_goods_successful() {
     //given
-    GoodsCreateCommand goodsCreateCommand = new GoodsCreateCommand("001", "apple", 3.5);
+    GoodsCreateRequest goodsCreateRequest = new GoodsCreateRequest("001", "apple", 3.5);
 
     //when
-    GoodsDTO goodsVO = goodsController.create(goodsCreateCommand);
+    GoodsDTO goodsDTO = goodsController.create(goodsCreateRequest);
 
     //then
-    assertThat(goodsVO.getCode(), is("001"));
-    assertThat(goodsVO.getName(), is("apple"));
-    assertThat(goodsVO.getPrice(), is(3.5));
-    assertThat(goodsVO.getAggregateId(), is(notNullValue()));
+    assertThat(goodsDTO.getCode(), is("001"));
+    assertThat(goodsDTO.getName(), is("apple"));
+    assertThat(goodsDTO.getPrice(), is(3.5));
+    assertThat(goodsDTO.getAggregateId(), is(notNullValue()));
   }
 
   @Test
@@ -79,10 +83,10 @@ class GoodsControllerUnitTest {
     ));
 
     //when
-    List<GoodsDTO> goodsVOs = goodsController.getAll();
+    List<GoodsDTO> goodsResponses = goodsController.getAll();
 
     //then
-    assertThat(goodsVOs.size(), is(2));
-    assertThat(goodsVOs.stream().map(GoodsDTO::getCode).collect(toList()), containsInAnyOrder("001", "002"));
+    assertThat(goodsResponses.size(), is(2));
+    assertThat(goodsResponses.stream().map(GoodsDTO::getCode).collect(toList()), containsInAnyOrder("001", "002"));
   }
 }

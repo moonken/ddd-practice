@@ -17,7 +17,7 @@ public abstract class BaseEntityPO {
   @Id
   @Column(name = "id")
   @Getter
-  private Long entityId;
+  private String entityId;
 
   @CreationTimestamp
   @Column(updatable = false)

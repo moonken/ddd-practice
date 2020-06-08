@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public abstract class BaseEntity {
 
-  private Long entityId;
+  private String entityId;
 }

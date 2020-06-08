@@ -1,6 +1,7 @@
 package com.thoughtworks.dddpractice.representation.dto;
 
 import com.thoughtworks.dddpractice.domain.goods.Goods;
+import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

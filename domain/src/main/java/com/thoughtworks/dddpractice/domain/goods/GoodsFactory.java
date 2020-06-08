@@ -1,7 +1,7 @@
 package com.thoughtworks.dddpractice.domain.goods;
 
+import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.domain.goods.exception.GoodsCodeDuplicatedException;
-import com.thoughtworks.dddpractice.domain.goods.vo.GoodsVO;
 import com.thoughtworks.dddpractice.framework.annotations.domain.DomainFactory;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariant;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariants;
@@ -21,19 +21,16 @@ public class GoodsFactory {
   private final GoodsRepository goodsRepository;
 
   @Invariant("duplicates")
-  public Goods create(GoodsVO goodsVO) {
-    if (goodsRepository.findByCode(goodsVO.getCode()).isPresent()) {
-      throw new GoodsCodeDuplicatedException(goodsVO.getCode());
+  public Goods create(GoodsDTO goodsDTO) {
+    if (goodsRepository.findByCode(goodsDTO.getCode()).isPresent()) {
+      throw new GoodsCodeDuplicatedException(goodsDTO.getCode());
     }
 
-    Goods goods = new Goods(UUID.randomUUID().toString(), goodsVO, domainEventPublisher);
-    goodsRepository.save(goods);
-    domainEventPublisher.publish(new GoodsCreatedEvent(goods.getAggregateId()));
-    return goods;
+    return new Goods(UUID.randomUUID().toString(), goodsDTO, domainEventPublisher);
   }
 
-  public Goods load(GoodsVO goodsVO) {
-    return new Goods(goodsVO, domainEventPublisher);
+  public Goods load(GoodsDTO goodsDTO) {
+    return new Goods(goodsDTO, domainEventPublisher);
   }
 
 }

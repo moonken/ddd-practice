@@ -57,7 +57,7 @@ class GoodsControllerIntegrationTest {
       "\"price\": 3.5\n" +
       "}";
     GoodsCreateCommand command = GoodsCreateCommand.builder().code("001").name("apple").price(3.5).build();
-    Goods goods = goodsFactory.create(ObjectMapper.MAPPER.commandToVO(command));
+    Goods goods = goodsFactory.create(ObjectMapper.MAPPER.commandToDTO(command));
     when(goodsWriteService.create(command))
       .thenReturn(goods);
 

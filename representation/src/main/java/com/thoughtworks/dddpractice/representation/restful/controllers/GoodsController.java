@@ -1,13 +1,14 @@
 package com.thoughtworks.dddpractice.representation.restful.controllers;
 
-import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
-import com.thoughtworks.dddpractice.application.command.GoodsRenameCommand;
 import com.thoughtworks.dddpractice.application.service.GoodsReadService;
 import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
+import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
-import com.thoughtworks.dddpractice.representation.dto.GoodsDTO;
+import com.thoughtworks.dddpractice.representation.ObjectMapper;
 import com.thoughtworks.dddpractice.representation.dto.GoodsMapper;
+import com.thoughtworks.dddpractice.representation.restful.request.GoodsCreateRequest;
+import com.thoughtworks.dddpractice.representation.restful.request.GoodsRenameRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,14 +33,14 @@ public class GoodsController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public GoodsDTO create(@RequestBody @Valid GoodsCreateCommand command) {
-    Goods goods = goodsWriteService.create(command);
+  public GoodsDTO create(@RequestBody @Valid GoodsCreateRequest request) {
+    Goods goods = goodsWriteService.create(ObjectMapper.MAPPER.toCommand(request));
     return GoodsMapper.MAPPER.toDTO(goods);
   }
 
   @PutMapping("{id}")
-  public void rename(@RequestBody @Valid GoodsRenameCommand command, @PathVariable String id) {
-    goodsWriteService.rename(id, command.getNewName());
+  public void rename(@RequestBody @Valid GoodsRenameRequest request, @PathVariable String id) {
+    goodsWriteService.rename(id, request.getNewName());
   }
 
   @GetMapping("{id}")

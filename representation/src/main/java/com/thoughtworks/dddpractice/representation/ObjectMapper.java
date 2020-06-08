@@ -1,7 +1,7 @@
-package com.thoughtworks.dddpractice.application;
+package com.thoughtworks.dddpractice.representation;
 
 import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
-import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
+import com.thoughtworks.dddpractice.representation.restful.request.GoodsCreateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,5 +12,5 @@ public interface ObjectMapper {
 
   ObjectMapper MAPPER = Mappers.getMapper(ObjectMapper.class);
 
-  GoodsDTO commandToDTO(GoodsCreateCommand goodsCreateCommand);
+  GoodsCreateCommand toCommand(GoodsCreateRequest request);
 }

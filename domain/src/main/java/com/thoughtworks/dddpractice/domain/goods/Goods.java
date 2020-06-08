@@ -1,8 +1,8 @@
 package com.thoughtworks.dddpractice.domain.goods;
 
+import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.domain.goods.exception.GoodsNameTooLongException;
 import com.thoughtworks.dddpractice.domain.goods.exception.PriceLessThanZeroException;
-import com.thoughtworks.dddpractice.domain.goods.vo.GoodsVO;
 import com.thoughtworks.dddpractice.framework.annotations.domain.AggregateRoot;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariant;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariants;
@@ -24,19 +24,19 @@ public class Goods extends BaseAggregateRoot {
   private String name;
   private Double price;
 
-  Goods(GoodsVO goodsVO, DomainEventPublisher domainEventPublisher) {
+  Goods(GoodsDTO goodsDTO, DomainEventPublisher domainEventPublisher) {
     super(domainEventPublisher);
-    this.aggregateId = goodsVO.getAggregateId();
-    this.code = goodsVO.getCode();
-    this.name = goodsVO.getName();
-    this.price = goodsVO.getPrice();
+    this.aggregateId = goodsDTO.getAggregateId();
+    this.code = goodsDTO.getCode();
+    this.name = goodsDTO.getName();
+    this.price = goodsDTO.getPrice();
   }
 
-  Goods(String id, GoodsVO goodsVO, DomainEventPublisher domainEventPublisher) {
-    this(goodsVO, domainEventPublisher);
-    validateNameLength(goodsVO.getName());
-    validatePrice(goodsVO.getPrice());
-    this.aggregateId = id;
+  Goods(String generatedId, GoodsDTO goodsDTO, DomainEventPublisher domainEventPublisher) {
+    this(goodsDTO, domainEventPublisher);
+    validateNameLength(goodsDTO.getName());
+    validatePrice(goodsDTO.getPrice());
+    this.aggregateId = generatedId;
   }
 
   public void rename(String name) {
