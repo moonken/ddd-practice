@@ -15,8 +15,8 @@ public class OrderItem extends BaseEntity {
   private Double quality;
   private double discount;
 
-  OrderItem(String id, OrderItemDTO vo) {
-    this.entityId = id;
+  OrderItem(String generatedId, OrderItemDTO vo) {
+    this.entityId = generatedId;
     this.goodsId = vo.getGoodsId();
     this.quality = vo.getQuality();
     this.discount = NO_DISCOUNT;
@@ -26,6 +26,6 @@ public class OrderItem extends BaseEntity {
     this.entityId = vo.getEntityId();
     this.goodsId = vo.getGoodsId();
     this.quality = vo.getQuality();
-    this.discount = NO_DISCOUNT;
+    this.discount = vo.getDiscount();
   }
 }
