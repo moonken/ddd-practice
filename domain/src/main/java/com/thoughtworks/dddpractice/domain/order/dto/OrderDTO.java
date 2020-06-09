@@ -19,4 +19,6 @@ public class OrderDTO {
   private String aggregateId;
   private String customerId;
   private List<OrderItemDTO> items;
+  private double freight;
+  private double discount;
 }

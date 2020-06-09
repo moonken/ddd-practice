@@ -34,6 +34,10 @@ public class OrderPO extends BaseAggregateRootPO<Order> {
 
   private String customerId;
 
+  private double freight;
+
+  private double discount;
+
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "order_id")
   private List<OrderItemPO> items;
