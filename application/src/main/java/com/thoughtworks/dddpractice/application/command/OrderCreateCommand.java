@@ -2,6 +2,7 @@ package com.thoughtworks.dddpractice.application.command;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data

@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -34,9 +35,11 @@ public class OrderPO extends BaseAggregateRootPO<Order> {
 
   private String customerId;
 
-  private double freight;
+  private BigDecimal freight;
 
   private double discount;
+
+  private BigDecimal totalAmount;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "order_id")

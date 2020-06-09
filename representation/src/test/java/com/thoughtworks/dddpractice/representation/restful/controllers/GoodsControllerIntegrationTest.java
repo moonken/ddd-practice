@@ -18,6 +18,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
@@ -56,7 +58,7 @@ class GoodsControllerIntegrationTest {
       "\"name\": \"apple\",\n" +
       "\"price\": 3.5\n" +
       "}";
-    GoodsCreateCommand command = GoodsCreateCommand.builder().code("001").name("apple").price(3.5).build();
+    GoodsCreateCommand command = GoodsCreateCommand.builder().code("001").name("apple").price(BigDecimal.valueOf(3.5)).build();
     Goods goods = goodsFactory.create(ObjectMapper.MAPPER.commandToDTO(command));
     when(goodsWriteService.create(command))
       .thenReturn(goods);

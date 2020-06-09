@@ -10,6 +10,8 @@ import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
 import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+
 @Invariants({
   "name_length_limit: name can not too long",
   "price_must_great_than_0: price must great than 0"
@@ -22,7 +24,7 @@ public class Goods extends BaseAggregateRoot {
 
   private String code;
   private String name;
-  private Double price;
+  private BigDecimal price;
 
   Goods(GoodsDTO goodsDTO, DomainEventPublisher domainEventPublisher) {
     super(domainEventPublisher);
@@ -45,8 +47,8 @@ public class Goods extends BaseAggregateRoot {
   }
 
   @Invariant("price_must_great_than_0")
-  private void validatePrice(Double price) {
-    if (price == null || price <= 0) {
+  private void validatePrice(BigDecimal price) {
+    if (price == null || price.compareTo(BigDecimal.ZERO) < 0) {
       throw new PriceLessThanZeroException(price);
     }
   }

@@ -14,7 +14,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(of = "aggregateId")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class BaseAggregateRootPO<D extends BaseAggregateRoot> {
 
@@ -45,4 +45,7 @@ public abstract class BaseAggregateRootPO<D extends BaseAggregateRoot> {
   }
 
   protected abstract void update(D aggregate);
+
+  @EqualsAndHashCode.Include
+  protected abstract String getAggregateId();
 }

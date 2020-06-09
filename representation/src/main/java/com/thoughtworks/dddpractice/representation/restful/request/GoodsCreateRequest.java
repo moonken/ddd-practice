@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -19,5 +20,5 @@ public class GoodsCreateRequest {
   private String name;
 
   @NotNull
-  private Double price;
+  private BigDecimal price;
 }

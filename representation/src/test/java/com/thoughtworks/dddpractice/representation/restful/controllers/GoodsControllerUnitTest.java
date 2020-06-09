@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +63,7 @@ class GoodsControllerUnitTest {
   @Test
   void should_create_goods_successful() {
     //given
-    GoodsCreateRequest goodsCreateRequest = new GoodsCreateRequest("001", "apple", 3.5);
+    GoodsCreateRequest goodsCreateRequest = new GoodsCreateRequest("001", "apple", BigDecimal.valueOf(3.5));
 
     //when
     GoodsDTO goodsDTO = goodsController.create(goodsCreateRequest);
@@ -70,7 +71,7 @@ class GoodsControllerUnitTest {
     //then
     assertThat(goodsDTO.getCode(), is("001"));
     assertThat(goodsDTO.getName(), is("apple"));
-    assertThat(goodsDTO.getPrice(), is(3.5));
+    assertThat(goodsDTO.getPrice(), is(BigDecimal.valueOf(3.5)));
     assertThat(goodsDTO.getAggregateId(), is(notNullValue()));
   }
 
@@ -78,8 +79,8 @@ class GoodsControllerUnitTest {
   void should_get_all_goods_successful() {
     //given
     when(jpaGoodsRepository.findAll()).thenReturn(asList(
-      new GoodsPO(UUID.randomUUID().toString(), "001", "apple", 3.5),
-      new GoodsPO(UUID.randomUUID().toString(), "002", "banana", 2.5)
+      new GoodsPO(UUID.randomUUID().toString(), "001", "apple", BigDecimal.valueOf(3.5)),
+      new GoodsPO(UUID.randomUUID().toString(), "002", "banana", BigDecimal.valueOf(2.5))
     ));
 
     //when

@@ -1,5 +1,6 @@
-package com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods;
+package com.thoughtworks.dddpractice.infrastructure.repository.jpa.customer.goods;
 
+import com.thoughtworks.dddpractice.domain.customer.Customer;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRootPO;
 import lombok.AllArgsConstructor;
@@ -13,30 +14,28 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "goods")
+@Table(name = "customers")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Where(clause = "aggregate_status='ACTIVE'")
-public class GoodsPO extends BaseAggregateRootPO<Goods> {
+public class CustomerPO extends BaseAggregateRootPO<Customer> {
 
   @Id
   @Column(name = "id")
   @Setter
   protected String aggregateId;
 
-  private String code;
   private String name;
-  private BigDecimal price;
+
+  private boolean vip;
 
   @Override
-  protected void update(Goods aggregate) {
-    this.code = aggregate.getCode();
+  protected void update(Customer aggregate) {
     this.name = aggregate.getName();
-    this.price = aggregate.getPrice();
+    this.vip = aggregate.isVip();
   }
 }
