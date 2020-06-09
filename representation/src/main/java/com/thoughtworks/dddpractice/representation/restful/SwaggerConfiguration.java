@@ -1,4 +1,4 @@
-package com.thoughtworks.dddpractice.goods.representation.restful;
+package com.thoughtworks.dddpractice.representation.restful;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
