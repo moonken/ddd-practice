@@ -51,7 +51,7 @@ class GoodsControllerUnitTest {
 
   @BeforeEach
   void setUp() {
-    goodsFactory = new GoodsFactory(domainEventPublisher, goodsRepository);
+    goodsFactory = new GoodsFactory(goodsRepository);
     goodsService = new GoodsService(goodsFactory, goodsRepository, domainEventPublisher);
 
     goodsWriteService = new GoodsWriteService(goodsService, goodsRepository);

@@ -27,12 +27,6 @@ public abstract class BaseAggregateRoot {
 
   private AggregateStatus aggregateStatus = AggregateStatus.ACTIVE;
 
-  protected DomainEventPublisher eventPublisher;
-
-  public BaseAggregateRoot(DomainEventPublisher domainEventPublisher) {
-    this.eventPublisher = domainEventPublisher;
-  }
-
   public void markAsRemoved() {
     aggregateStatus = AggregateStatus.ARCHIVE;
   }
@@ -43,9 +37,5 @@ public abstract class BaseAggregateRoot {
 
   protected void domainError(String message) {
     throw new DomainOperationException(aggregateId, message);
-  }
-
-  protected void publish(Serializable event) {
-    eventPublisher.publish(event);
   }
 }

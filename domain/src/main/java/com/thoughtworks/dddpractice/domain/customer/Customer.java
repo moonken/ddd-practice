@@ -17,15 +17,13 @@ public class Customer extends BaseAggregateRoot {
   private String name;
   private boolean vip;
 
-  Customer(String generatedId, CustomerDTO customerDTO, DomainEventPublisher domainEventPublisher) {
-    super(domainEventPublisher);
+  Customer(String generatedId, CustomerDTO customerDTO) {
     this.aggregateId = generatedId;
     this.name = customerDTO.getName();
     this.vip = customerDTO.isVip();
   }
 
-  Customer(CustomerDTO customerDTO, DomainEventPublisher domainEventPublisher) {
-    super(domainEventPublisher);
+  Customer(CustomerDTO customerDTO) {
     this.aggregateId = customerDTO.getAggregateId();
     this.name = customerDTO.getName();
     this.vip = customerDTO.isVip();

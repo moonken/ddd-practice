@@ -21,8 +21,6 @@ import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class GoodsFactoryTest {
-  @Mock
-  DomainEventPublisher domainEventPublisher;
 
   @Mock
   GoodsRepository goodsRepository;
@@ -31,7 +29,7 @@ class GoodsFactoryTest {
 
   @BeforeEach
   void setUp() {
-    goodsFactory = new GoodsFactory(domainEventPublisher, goodsRepository);
+    goodsFactory = new GoodsFactory(goodsRepository);
   }
 
   @Test

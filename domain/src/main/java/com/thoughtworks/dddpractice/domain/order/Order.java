@@ -24,8 +24,7 @@ public class Order extends BaseAggregateRoot {
   private double discount;
   private BigDecimal totalAmount;
 
-  Order(OrderDTO orderDTO, DomainEventPublisher domainEventPublisher) {
-    super(domainEventPublisher);
+  Order(OrderDTO orderDTO) {
     this.aggregateId = orderDTO.getAggregateId();
     this.customerId = orderDTO.getCustomerId();
     this.discount = orderDTO.getDiscount();
@@ -34,8 +33,8 @@ public class Order extends BaseAggregateRoot {
     this.totalAmount = orderDTO.getTotalAmount();
   }
 
-  Order(String generatedId, OrderDTO orderVO, DomainEventPublisher domainEventPublisher) {
-    this(orderVO, domainEventPublisher);
+  Order(String generatedId, OrderDTO orderVO) {
+    this(orderVO);
     this.aggregateId = generatedId;
     this.discount = NO_DISCOUNT;
     this.freight = DEFAULT_FREIGHT;

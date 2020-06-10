@@ -26,16 +26,15 @@ public class Goods extends BaseAggregateRoot {
   private String name;
   private BigDecimal price;
 
-  Goods(GoodsDTO goodsDTO, DomainEventPublisher domainEventPublisher) {
-    super(domainEventPublisher);
+  Goods(GoodsDTO goodsDTO) {
     this.aggregateId = goodsDTO.getAggregateId();
     this.code = goodsDTO.getCode();
     this.name = goodsDTO.getName();
     this.price = goodsDTO.getPrice();
   }
 
-  Goods(String generatedId, GoodsDTO goodsDTO, DomainEventPublisher domainEventPublisher) {
-    this(goodsDTO, domainEventPublisher);
+  Goods(String generatedId, GoodsDTO goodsDTO) {
+    this(goodsDTO);
     validateNameLength(goodsDTO.getName());
     validatePrice(goodsDTO.getPrice());
     this.aggregateId = generatedId;

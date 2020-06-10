@@ -25,6 +25,7 @@ public class SimpleEventPublisher implements DomainEventPublisher, BeanPostProce
 
   public SimpleEventPublisher(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
+    DomainEventPublisher.Utils.setInstance(this);
   }
 
   @Override

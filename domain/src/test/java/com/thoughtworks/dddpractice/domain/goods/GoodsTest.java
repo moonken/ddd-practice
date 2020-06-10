@@ -3,14 +3,12 @@ package com.thoughtworks.dddpractice.domain.goods;
 import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.domain.goods.exception.GoodsNameTooLongException;
 import com.thoughtworks.dddpractice.domain.goods.exception.PriceLessThanZeroException;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GoodsTest {
   @Test
@@ -21,8 +19,7 @@ class GoodsTest {
           .code("001")
           .name("looooooooooooooooooooooooooooooong")
           .price(BigDecimal.valueOf(3.5))
-          .build(),
-        mock(DomainEventPublisher.class));
+          .build());
     });
   }
 
@@ -34,8 +31,7 @@ class GoodsTest {
           .code("001")
           .name("name")
           .price(BigDecimal.valueOf(-3.5))
-          .build(),
-        mock(DomainEventPublisher.class));
+          .build());
     });
   }
 }

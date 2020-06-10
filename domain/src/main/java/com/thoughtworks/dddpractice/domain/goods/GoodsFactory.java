@@ -17,7 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class GoodsFactory {
 
-  private final DomainEventPublisher domainEventPublisher;
   private final GoodsRepository goodsRepository;
 
   @Invariant("duplicates")
@@ -26,11 +25,11 @@ public class GoodsFactory {
       throw new GoodsCodeDuplicatedException(goodsDTO.getCode());
     }
 
-    return new Goods(UUID.randomUUID().toString(), goodsDTO, domainEventPublisher);
+    return new Goods(UUID.randomUUID().toString(), goodsDTO);
   }
 
   public Goods load(GoodsDTO goodsDTO) {
-    return new Goods(goodsDTO, domainEventPublisher);
+    return new Goods(goodsDTO);
   }
 
 }

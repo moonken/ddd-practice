@@ -30,9 +30,6 @@ import static org.mockito.Mockito.when;
 class OrderFactoryTest {
 
   @Mock
-  DomainEventPublisher domainEventPublisher;
-
-  @Mock
   GoodsRepository goodsRepository;
 
   OrderFactory orderFactory;
@@ -43,8 +40,8 @@ class OrderFactoryTest {
 
   @BeforeEach
   void setUp() {
-    goodsFactory = new GoodsFactory(domainEventPublisher, goodsRepository);
-    orderFactory = new OrderFactory(domainEventPublisher, goodsRepository);
+    goodsFactory = new GoodsFactory(goodsRepository);
+    orderFactory = new OrderFactory(goodsRepository);
   }
 
   @Test

@@ -11,16 +11,15 @@ import java.util.UUID;
 @DomainFactory
 @AllArgsConstructor
 public class OrderFactory {
-  private final DomainEventPublisher domainEventPublisher;
   private final GoodsRepository goodsRepository;
 
   public Order create(OrderDTO orderVO) {
     orderVO.getItems()
       .forEach(orderItemDTO -> orderItemDTO.setGoods(new GoodsSnapshot(goodsRepository.load(orderItemDTO.getGoodsId()))));
-    return new Order(UUID.randomUUID().toString(), orderVO, domainEventPublisher);
+    return new Order(UUID.randomUUID().toString(), orderVO);
   }
 
   public Order load(OrderDTO orderVO) {
-    return new Order(orderVO, domainEventPublisher);
+    return new Order(orderVO);
   }
 }

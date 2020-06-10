@@ -45,9 +45,7 @@ class GoodsControllerIntegrationTest {
 
   @BeforeEach
   void setUp() {
-    goodsFactory = new GoodsFactory(
-      mock(DomainEventPublisher.class),
-      mock(GoodsRepository.class));
+    goodsFactory = new GoodsFactory(mock(GoodsRepository.class));
   }
 
   @Test
