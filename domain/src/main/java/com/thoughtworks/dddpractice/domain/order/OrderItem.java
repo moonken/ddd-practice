@@ -1,13 +1,13 @@
 package com.thoughtworks.dddpractice.domain.order;
 
 import com.thoughtworks.dddpractice.framework.annotations.domain.DomainEntity;
+import com.thoughtworks.dddpractice.framework.support.IdGenerator;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @DomainEntity
 @Getter
@@ -24,7 +24,7 @@ public class OrderItem extends BaseEntity {
 
   OrderItem(String entityId, String goodsId, GoodsSnapshot goods, Double quality, double discount) {
     if (entityId == null) {
-      this.entityId = UUID.randomUUID().toString();
+      this.entityId = IdGenerator.nextId();
       this.discount = NO_DISCOUNT;
     } else {
       this.entityId = entityId;

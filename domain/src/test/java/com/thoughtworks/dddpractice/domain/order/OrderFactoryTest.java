@@ -3,6 +3,7 @@ package com.thoughtworks.dddpractice.domain.order;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
+import com.thoughtworks.dddpractice.framework.support.IdGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
@@ -30,7 +30,7 @@ class OrderFactoryTest {
 
   GoodsFactory goodsFactory;
 
-  String customerId = UUID.randomUUID().toString();
+  String customerId = IdGenerator.nextId();
 
   @BeforeEach
   void setUp() {

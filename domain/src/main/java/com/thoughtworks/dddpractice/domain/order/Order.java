@@ -1,12 +1,12 @@
 package com.thoughtworks.dddpractice.domain.order;
 
 import com.thoughtworks.dddpractice.framework.annotations.domain.AggregateRoot;
+import com.thoughtworks.dddpractice.framework.support.IdGenerator;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @AggregateRoot
 @Getter
@@ -32,7 +32,7 @@ public class Order extends BaseAggregateRoot {
   }
 
   Order(String customerId, List<OrderItem> items) {
-    this.aggregateId = UUID.randomUUID().toString();
+    this.aggregateId = IdGenerator.nextId();
     this.freight = DEFAULT_FREIGHT;
     this.discount = NO_DISCOUNT;
     this.customerId = customerId;

@@ -5,6 +5,7 @@ import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
 import com.thoughtworks.dddpractice.domain.goods.GoodsService;
+import com.thoughtworks.dddpractice.framework.support.IdGenerator;
 import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.JpaGoodsRepository;
@@ -18,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -79,8 +79,8 @@ class GoodsControllerUnitTest {
   void should_get_all_goods_successful() {
     //given
     when(jpaGoodsRepository.findAll()).thenReturn(asList(
-      new GoodsPO(UUID.randomUUID().toString(), "001", "apple", BigDecimal.valueOf(3.5)),
-      new GoodsPO(UUID.randomUUID().toString(), "002", "banana", BigDecimal.valueOf(2.5))
+      new GoodsPO(IdGenerator.nextId(), "001", "apple", BigDecimal.valueOf(3.5)),
+      new GoodsPO(IdGenerator.nextId(), "002", "banana", BigDecimal.valueOf(2.5))
     ));
 
     //when

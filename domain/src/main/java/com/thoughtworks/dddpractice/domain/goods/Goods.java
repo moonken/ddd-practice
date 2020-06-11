@@ -5,11 +5,11 @@ import com.thoughtworks.dddpractice.domain.goods.exception.PriceLessThanZeroExce
 import com.thoughtworks.dddpractice.framework.annotations.domain.AggregateRoot;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariant;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariants;
+import com.thoughtworks.dddpractice.framework.support.IdGenerator;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Invariants({
   "name_length_limit: name can not too long",
@@ -34,7 +34,7 @@ public class Goods extends BaseAggregateRoot {
   }
 
   Goods(String code, String name, BigDecimal price) {
-    this.aggregateId = UUID.randomUUID().toString();
+    this.aggregateId = IdGenerator.nextId();
     validateNameLength(name);
     validatePrice(price);
     this.code = code;
