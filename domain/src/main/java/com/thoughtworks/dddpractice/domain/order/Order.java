@@ -1,16 +1,12 @@
 package com.thoughtworks.dddpractice.domain.order;
 
-import com.thoughtworks.dddpractice.domain.order.dto.OrderDTO;
 import com.thoughtworks.dddpractice.framework.annotations.domain.AggregateRoot;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-
-import static java.util.stream.Collectors.toList;
 
 @AggregateRoot
 @Getter
@@ -18,28 +14,29 @@ public class Order extends BaseAggregateRoot {
   private static final double NO_DISCOUNT = 1;
   private static final BigDecimal DEFAULT_FREIGHT = BigDecimal.valueOf(20);
 
+  private String aggregateId;
   private String customerId;
   private List<OrderItem> items;
   private BigDecimal freight;
   private double discount;
   private BigDecimal totalAmount;
 
-  Order(OrderDTO orderDTO) {
-    this.aggregateId = orderDTO.getAggregateId();
-    this.customerId = orderDTO.getCustomerId();
-    this.discount = orderDTO.getDiscount();
-    this.freight = orderDTO.getFreight();
-    this.items = orderDTO.getItems().stream().map(OrderItem::new).collect(toList());
-    this.totalAmount = orderDTO.getTotalAmount();
+  Order(String aggregateId, String customerId, List<OrderItem> items, BigDecimal freight, double discount,
+        BigDecimal totalAmount) {
+    this.aggregateId = aggregateId;
+    this.customerId = customerId;
+    this.items = items;
+    this.freight = freight;
+    this.discount = discount;
+    this.totalAmount = totalAmount;
   }
 
-  Order(String generatedId, OrderDTO orderVO) {
-    this(orderVO);
-    this.aggregateId = generatedId;
-    this.discount = NO_DISCOUNT;
+  Order(String customerId, List<OrderItem> items) {
+    this.aggregateId = UUID.randomUUID().toString();
     this.freight = DEFAULT_FREIGHT;
-    this.customerId = orderVO.getCustomerId();
-    this.items = orderVO.getItems().stream().map(item -> new OrderItem(UUID.randomUUID().toString(), item)).collect(toList());
+    this.discount = NO_DISCOUNT;
+    this.customerId = customerId;
+    this.items = items;
     calcTotalAmount();
   }
 

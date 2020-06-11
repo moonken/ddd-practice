@@ -8,6 +8,8 @@ import com.thoughtworks.dddpractice.framework.support.domain.GenericDomainReposi
 import com.thoughtworks.dddpractice.infrastructure.ObjectMapper;
 import org.springframework.context.annotation.Lazy;
 
+import static java.util.stream.Collectors.toList;
+
 @DomainRepositoryImpl
 public class OrderRepositoryImpl extends GenericDomainRepositoryImpl<Order, OrderPO> implements OrderRepository {
   private final OrderFactory orderFactory;
@@ -18,7 +20,10 @@ public class OrderRepositoryImpl extends GenericDomainRepositoryImpl<Order, Orde
 
   @Override
   protected Order poToDomain(OrderPO orderPO) {
-    return orderFactory.load(ObjectMapper.MAPPER.poToDTO(orderPO));
+    return orderFactory.load(orderPO.getAggregateId(), orderPO.getCustomerId(),
+      orderPO.getItems().stream().map(OrderItemPO::toDomain).collect(toList()),
+      orderPO.getFreight(), orderPO.getDiscount(),
+      orderPO.getTotalAmount());
   }
 
   @Override

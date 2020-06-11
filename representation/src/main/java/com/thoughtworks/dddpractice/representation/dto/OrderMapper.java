@@ -3,8 +3,6 @@ package com.thoughtworks.dddpractice.representation.dto;
 import com.thoughtworks.dddpractice.application.command.OrderCreateCommand;
 import com.thoughtworks.dddpractice.domain.order.Order;
 import com.thoughtworks.dddpractice.domain.order.OrderItem;
-import com.thoughtworks.dddpractice.domain.order.dto.OrderDTO;
-import com.thoughtworks.dddpractice.domain.order.dto.OrderItemDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.order.OrderItemPO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.order.OrderPO;
 import com.thoughtworks.dddpractice.representation.restful.request.OrderCreateRequest;

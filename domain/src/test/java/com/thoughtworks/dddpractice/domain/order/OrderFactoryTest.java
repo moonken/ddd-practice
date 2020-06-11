@@ -3,10 +3,6 @@ package com.thoughtworks.dddpractice.domain.order;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
-import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
-import com.thoughtworks.dddpractice.domain.order.dto.OrderItemDTO;
-import com.thoughtworks.dddpractice.domain.order.dto.OrderDTO;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +18,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,19 +41,17 @@ class OrderFactoryTest {
   @Test
   void should_create_order_successful() {
     Goods apple =
-      goodsFactory.create(GoodsDTO.builder().code("01").name("apple").price(BigDecimal.valueOf(3.5)).build());
+      goodsFactory.create("01", "apple", BigDecimal.valueOf(3.5));
     Goods orange =
-      goodsFactory.create(GoodsDTO.builder().code("02").name("orange").price(BigDecimal.valueOf(2)).build());
+      goodsFactory.create("02", "orange", BigDecimal.valueOf(3.5));
     when(goodsRepository.load(apple.getAggregateId())).thenReturn(apple);
     when(goodsRepository.load(orange.getAggregateId())).thenReturn(orange);
 
-    Order order = orderFactory.create(OrderDTO.builder()
-      .customerId(customerId)
-      .items(asList(
-        new OrderItemDTO(apple.getAggregateId(), 3.5d),
-        new OrderItemDTO(orange.getAggregateId(), 2d)))
-      .build());
-
+    Order order = orderFactory.create(customerId,
+      asList(
+        OrderItem.builder().goodsId(apple.getAggregateId()).quality(3.5d).build(),
+        OrderItem.builder().goodsId(orange.getAggregateId()).quality(2d).build())
+    );
 
     assertThat(order.getCustomerId(), is(customerId));
     assertThat(order.getItems().size(), is(2));

@@ -1,14 +1,11 @@
-package com.thoughtworks.dddpractice.domain.order.dto;
+package com.thoughtworks.dddpractice.representation.dto;
 
 import com.thoughtworks.dddpractice.domain.order.GoodsSnapshot;
-import com.thoughtworks.dddpractice.framework.annotations.domain.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor

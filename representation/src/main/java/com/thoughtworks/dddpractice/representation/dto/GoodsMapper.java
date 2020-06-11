@@ -2,7 +2,6 @@ package com.thoughtworks.dddpractice.representation.dto;
 
 import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
-import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.goods.GoodsPO;
 import com.thoughtworks.dddpractice.representation.restful.request.GoodsCreateRequest;
 import org.mapstruct.Mapper;

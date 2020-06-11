@@ -1,16 +1,15 @@
 package com.thoughtworks.dddpractice.domain.goods;
 
-import com.thoughtworks.dddpractice.domain.goods.dto.GoodsDTO;
 import com.thoughtworks.dddpractice.domain.goods.exception.GoodsNameTooLongException;
 import com.thoughtworks.dddpractice.domain.goods.exception.PriceLessThanZeroException;
 import com.thoughtworks.dddpractice.framework.annotations.domain.AggregateRoot;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariant;
 import com.thoughtworks.dddpractice.framework.annotations.domain.Invariants;
 import com.thoughtworks.dddpractice.framework.support.domain.BaseAggregateRoot;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Invariants({
   "name_length_limit: name can not too long",
@@ -22,22 +21,25 @@ public class Goods extends BaseAggregateRoot {
 
   public static final int MAX_GOODS_NAME = 20;
 
+  private String aggregateId;
   private String code;
   private String name;
   private BigDecimal price;
 
-  Goods(GoodsDTO goodsDTO) {
-    this.aggregateId = goodsDTO.getAggregateId();
-    this.code = goodsDTO.getCode();
-    this.name = goodsDTO.getName();
-    this.price = goodsDTO.getPrice();
+  Goods(String aggregateId, String code, String name, BigDecimal price) {
+    this.aggregateId = aggregateId;
+    this.code = code;
+    this.name = name;
+    this.price = price;
   }
 
-  Goods(String generatedId, GoodsDTO goodsDTO) {
-    this(goodsDTO);
-    validateNameLength(goodsDTO.getName());
-    validatePrice(goodsDTO.getPrice());
-    this.aggregateId = generatedId;
+  Goods(String code, String name, BigDecimal price) {
+    this.aggregateId = UUID.randomUUID().toString();
+    validateNameLength(name);
+    validatePrice(price);
+    this.code = code;
+    this.name = name;
+    this.price = price;
   }
 
   public void rename(String name) {

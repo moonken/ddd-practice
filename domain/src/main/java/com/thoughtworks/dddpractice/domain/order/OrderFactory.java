@@ -1,25 +1,25 @@
 package com.thoughtworks.dddpractice.domain.order;
 
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
-import com.thoughtworks.dddpractice.domain.order.dto.OrderDTO;
 import com.thoughtworks.dddpractice.framework.annotations.domain.DomainFactory;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import lombok.AllArgsConstructor;
 
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.List;
 
 @DomainFactory
 @AllArgsConstructor
 public class OrderFactory {
   private final GoodsRepository goodsRepository;
 
-  public Order create(OrderDTO orderVO) {
-    orderVO.getItems()
-      .forEach(orderItemDTO -> orderItemDTO.setGoods(new GoodsSnapshot(goodsRepository.load(orderItemDTO.getGoodsId()))));
-    return new Order(UUID.randomUUID().toString(), orderVO);
+  public Order create(String customerId, List<OrderItem> items) {
+    items
+      .forEach(orderItem -> orderItem.setGoods(new GoodsSnapshot(goodsRepository.load(orderItem.getGoodsId()))));
+    return new Order(customerId, items);
   }
 
-  public Order load(OrderDTO orderVO) {
-    return new Order(orderVO);
+  public Order load(String aggregateId, String customerId, List<OrderItem> items, BigDecimal freight, double discount,
+                    BigDecimal totalAmount) {
+    return new Order(aggregateId, customerId, items, freight, discount, totalAmount);
   }
 }

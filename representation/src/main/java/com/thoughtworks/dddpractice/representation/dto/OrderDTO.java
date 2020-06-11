@@ -1,6 +1,5 @@
-package com.thoughtworks.dddpractice.domain.order.dto;
+package com.thoughtworks.dddpractice.representation.dto;
 
-import com.thoughtworks.dddpractice.framework.annotations.domain.ValueObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

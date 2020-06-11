@@ -1,9 +1,7 @@
 package com.thoughtworks.dddpractice.representation.dto;
 
-import com.thoughtworks.dddpractice.domain.customer.dto.CustomerDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.customer.goods.CustomerPO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

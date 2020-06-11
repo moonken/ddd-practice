@@ -70,25 +70,27 @@ public class ArchitectureTest {
   }
 
   @Test
-  public void entity_should_not_export_public_constructor_and_only_be_called_by_aggregate_root() {
+  public void entity_should_not_export_public_constructor_and_only_be_called_by_aggregate_root_order_builder() {
     ArchRule rule = constructors().that()
       .areDeclaredInClassesThat().areAnnotatedWith(DomainEntity.class)
       .and().areDeclaredInClassesThat().areNotAnnotatedWith(AggregateRoot.class)
       .should().bePackagePrivate()
-      .andShould(constructorOnlyBeCalledBy(AggregateRoot.class));
+      .andShould(constructorOnlyBeCalledBy(AggregateRoot.class))
+      .orShould(constructorOnlyBeCalledByBuilder());
 
     rule.check(importedClasses);
   }
 
   @Test
-  public void entity_methods_should_only_be_called_by_aggregate_root() {
+  public void entity_methods_should_only_be_called_by_aggregate_root_or_factory() {
     ArchRule rule = methods().that()
       .haveNameNotMatching("^get(.*)")
       .and().haveNameNotMatching("^is(.*)")
       .and().areDeclaredInClassesThat().areAnnotatedWith(DomainEntity.class)
       .and().areDeclaredInClassesThat().areNotAnnotatedWith(AggregateRoot.class)
       .should().bePackagePrivate()
-      .andShould(methodOnlyBeCalledBy(AggregateRoot.class));
+      .andShould(methodOnlyBeCalledBy(AggregateRoot.class))
+      .orShould(methodOnlyBeCalledBy(DomainFactory.class));
 
     rule.check(importedClasses);
   }
@@ -134,6 +136,20 @@ public class ArchitectureTest {
       public void check(JavaMethod method, ConditionEvents events) {
         method.getCallsOfSelf().stream()
           .filter(call -> !call.getOriginOwner().isAnnotatedWith(annotationType))
+          .forEach(call -> events.add(SimpleConditionEvent.violated(method, call.getDescription())));
+      }
+    };
+  }
+
+
+  private ArchCondition<JavaConstructor> constructorOnlyBeCalledByBuilder() {
+    return new ArchCondition<JavaConstructor>("only be called by builder") {
+      @Override
+      public void check(JavaConstructor method, ConditionEvents events) {
+        method.getCallsOfSelf().stream()
+          .filter(call -> !(
+            call.getOriginOwner().getName().startsWith(call.getOriginOwner().getName())
+              && call.getOriginOwner().getName().endsWith("Builder")))
           .forEach(call -> events.add(SimpleConditionEvent.violated(method, call.getDescription())));
       }
     };

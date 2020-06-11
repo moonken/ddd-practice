@@ -6,9 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
-@EqualsAndHashCode(of = "aggregateId")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 public abstract class BaseAggregateRoot {
 
@@ -19,9 +17,6 @@ public abstract class BaseAggregateRoot {
   public enum AggregateStatus {
     ACTIVE, ARCHIVE;
   }
-
-  @Getter
-  protected String aggregateId;
 
   private Long version;
 
@@ -36,6 +31,9 @@ public abstract class BaseAggregateRoot {
   }
 
   protected void domainError(String message) {
-    throw new DomainOperationException(aggregateId, message);
+    throw new DomainOperationException(getAggregateId(), message);
   }
+
+  @EqualsAndHashCode.Include
+  protected abstract String getAggregateId();
 }

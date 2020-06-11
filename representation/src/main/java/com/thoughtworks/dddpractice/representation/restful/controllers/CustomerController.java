@@ -1,8 +1,8 @@
 package com.thoughtworks.dddpractice.representation.restful.controllers;
 
 import com.thoughtworks.dddpractice.application.service.CustomerReadService;
-import com.thoughtworks.dddpractice.domain.customer.dto.CustomerDTO;
 import com.thoughtworks.dddpractice.infrastructure.repository.jpa.customer.goods.CustomerPO;
+import com.thoughtworks.dddpractice.representation.dto.CustomerDTO;
 import com.thoughtworks.dddpractice.representation.dto.CustomerMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

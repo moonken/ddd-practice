@@ -18,7 +18,7 @@ public class CustomerRepositoryImpl extends GenericDomainRepositoryImpl<Customer
 
   @Override
   protected Customer poToDomain(CustomerPO customerPO) {
-    return customerFactory.load(ObjectMapper.MAPPER.poToDTO(customerPO));
+    return customerFactory.load(customerPO.getAggregateId(), customerPO.getName(), customerPO.isVip());
   }
 
   @Override

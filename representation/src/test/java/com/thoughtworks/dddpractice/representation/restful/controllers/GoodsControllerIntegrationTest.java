@@ -1,13 +1,11 @@
 package com.thoughtworks.dddpractice.representation.restful.controllers;
 
-import com.thoughtworks.dddpractice.application.ObjectMapper;
 import com.thoughtworks.dddpractice.application.command.GoodsCreateCommand;
 import com.thoughtworks.dddpractice.application.service.GoodsReadService;
 import com.thoughtworks.dddpractice.application.service.GoodsWriteService;
 import com.thoughtworks.dddpractice.domain.goods.Goods;
 import com.thoughtworks.dddpractice.domain.goods.GoodsFactory;
 import com.thoughtworks.dddpractice.domain.goods.GoodsRepository;
-import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +54,9 @@ class GoodsControllerIntegrationTest {
       "\"name\": \"apple\",\n" +
       "\"price\": 3.5\n" +
       "}";
-    GoodsCreateCommand command = GoodsCreateCommand.builder().code("001").name("apple").price(BigDecimal.valueOf(3.5)).build();
-    Goods goods = goodsFactory.create(ObjectMapper.MAPPER.commandToDTO(command));
+    GoodsCreateCommand command =
+      GoodsCreateCommand.builder().code("001").name("apple").price(BigDecimal.valueOf(3.5)).build();
+    Goods goods = goodsFactory.create("001", "apple", BigDecimal.valueOf(3.5));
     when(goodsWriteService.create(command))
       .thenReturn(goods);
 
