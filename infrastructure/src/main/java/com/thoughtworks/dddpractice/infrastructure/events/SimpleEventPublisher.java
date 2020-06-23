@@ -1,6 +1,7 @@
 package com.thoughtworks.dddpractice.infrastructure.events;
 
 import com.thoughtworks.dddpractice.framework.annotations.event.EventListener;
+import com.thoughtworks.dddpractice.framework.annotations.event.EventListeners;
 import com.thoughtworks.dddpractice.framework.support.domain.DomainEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -31,16 +32,18 @@ public class SimpleEventPublisher implements DomainEventPublisher, BeanPostProce
   @Override
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-    for (Method method : bean.getClass().getMethods()) {
-      EventListener listenerAnnotation = method.getAnnotation(EventListener.class);
+    if (bean.getClass().getAnnotation(EventListeners.class) != null) {
+      for (Method method : bean.getClass().getMethods()) {
+        EventListener listenerAnnotation = method.getAnnotation(EventListener.class);
 
-      if (listenerAnnotation == null) {
-        continue;
+        if (listenerAnnotation == null) {
+          continue;
+        }
+
+        Class<?> eventType = method.getParameterTypes()[0];
+        EventHandler handler = new SpringEventHandler(eventType, beanName, method, applicationContext);
+        registerEventHandler(handler);
       }
-
-      Class<?> eventType = method.getParameterTypes()[0];
-      EventHandler handler = new SpringEventHandler(eventType, beanName, method, applicationContext);
-      registerEventHandler(handler);
     }
 
     return bean;
@@ -51,7 +54,7 @@ public class SimpleEventPublisher implements DomainEventPublisher, BeanPostProce
     return bean;
   }
 
-  public void registerEventHandler(EventHandler handler) {
+  private void registerEventHandler(EventHandler handler) {
     eventHandlers.add(handler);
   }
 
@@ -60,7 +63,7 @@ public class SimpleEventPublisher implements DomainEventPublisher, BeanPostProce
     doPublish(event);
   }
 
-  protected void doPublish(Object event) {
+  private void doPublish(Object event) {
     for (EventHandler handler : new ArrayList<>(eventHandlers)) {
       if (handler.canHandle(event)) {
         try {
