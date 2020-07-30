@@ -15,12 +15,12 @@ import lombok.ToString;
 public class OrderItemDTO {
   private String entityId;
   private String goodsId;
-  private Double quality;
+  private Double quantity;
   private double discount;
   private GoodsSnapshot goods;
 
-  public OrderItemDTO(String goodsId, double quality) {
+  public OrderItemDTO(String goodsId, double quantity) {
     this.goodsId = goodsId;
-    this.quality = quality;
+    this.quantity = quantity;
   }
 }

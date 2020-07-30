@@ -32,7 +32,7 @@ public class OrderItemPO extends BaseEntityPO {
   private GoodsSnapshotPO goods;
 
   private String goodsId;
-  private Double quality;
+  private Double quantity;
   private double discount;
 
   public OrderItem toDomain() {
@@ -40,7 +40,7 @@ public class OrderItemPO extends BaseEntityPO {
       .entityId(this.entityId)
       .goods(goods.toDomain())
       .goodsId(this.goodsId)
-      .quality(this.quality)
+      .quantity(this.quantity)
       .discount(this.discount)
       .build();
   }

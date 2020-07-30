@@ -12,6 +12,6 @@ public class OrderCreateCommand {
   @Data
   public static class OrderItem {
     private String goodsId;
-    private Double quality;
+    private Double quantity;
   }
 }

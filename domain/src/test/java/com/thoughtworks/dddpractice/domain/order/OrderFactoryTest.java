@@ -49,8 +49,8 @@ class OrderFactoryTest {
 
     Order order = orderFactory.create(customerId,
       asList(
-        OrderItem.builder().goodsId(apple.getAggregateId()).quality(3.5d).build(),
-        OrderItem.builder().goodsId(orange.getAggregateId()).quality(2d).build())
+        OrderItem.builder().goodsId(apple.getAggregateId()).quantity(3.5d).build(),
+        OrderItem.builder().goodsId(orange.getAggregateId()).quantity(2d).build())
     );
 
     assertThat(order.getCustomerId(), is(customerId));

@@ -22,7 +22,7 @@ public class OrderWriteService {
       command.getItems().stream().map(
         item -> OrderItem.builder()
           .goodsId(item.getGoodsId())
-          .quality(item.getQuality())
+          .quanqtity(item.getQuantity())
           .build())
         .collect(toList()));
   }

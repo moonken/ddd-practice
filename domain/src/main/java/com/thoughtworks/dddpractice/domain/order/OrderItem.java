@@ -19,10 +19,10 @@ public class OrderItem extends BaseEntity {
   private String goodsId;
   @Setter
   private GoodsSnapshot goods;
-  private Double quality;
+  private Double quanqtity;
   private double discount;
 
-  OrderItem(String entityId, String goodsId, GoodsSnapshot goods, Double quality, double discount) {
+  OrderItem(String entityId, String goodsId, GoodsSnapshot goods, Double quantity, double discount) {
     if (entityId == null) {
       this.entityId = IdGenerator.nextId();
       this.discount = NO_DISCOUNT;
@@ -32,11 +32,11 @@ public class OrderItem extends BaseEntity {
     }
     this.goodsId = goodsId;
     this.goods = goods;
-    this.quality = quality;
+    this.quantity = quantity;
   }
 
 
   public BigDecimal getSubTotal() {
-    return this.goods.getPrice().multiply(BigDecimal.valueOf(quality)).multiply(BigDecimal.valueOf(discount));
+    return this.goods.getPrice().multiply(BigDecimal.valueOf(quantity)).multiply(BigDecimal.valueOf(discount));
   }
 }
