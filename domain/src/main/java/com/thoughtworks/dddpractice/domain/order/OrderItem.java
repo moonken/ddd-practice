@@ -19,7 +19,7 @@ public class OrderItem extends BaseEntity {
   private String goodsId;
   @Setter
   private GoodsSnapshot goods;
-  private Double quanqtity;
+  private Double quantity;
   private double discount;
 
   OrderItem(String entityId, String goodsId, GoodsSnapshot goods, Double quantity, double discount) {
