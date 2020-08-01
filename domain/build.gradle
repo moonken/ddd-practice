@@ -1,4 +1,0 @@
-dependencies {
-    compile project(':framework')
-    testImplementation 'com.tngtech.archunit:archunit:0.13.1'
-}

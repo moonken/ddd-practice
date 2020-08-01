@@ -2,17 +2,16 @@ package com.thoughtworks.dddpractice.framework.support.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
+
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @MappedSuperclass
